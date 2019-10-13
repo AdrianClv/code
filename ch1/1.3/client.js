@@ -6,7 +6,7 @@ class Client {
   constructor() {
     this.wallet = EthCrypto.createIdentity();
     // initialize the nonce
-    // TODO
+    this.nonce = 0;
   }
 
   // Creates a keccak256/SHA3 hash of some data
@@ -36,12 +36,11 @@ class Client {
   generateTx(to, amount, type) {
     // create an unsigned transaction
     const unsignedTx = {
-      type,
-      amount,
+      type: type,
+      amount: amount,
       from: this.wallet.address,
-      to,
-      // add wallet nonce to tx
-      // TODO
+      to: to,
+      nonce: this.nonce // add wallet nonce to tx
     };
     // create a signature of the transaction
     const tx = {
@@ -49,7 +48,7 @@ class Client {
       sig: this.sign(unsignedTx),
     };
     // increment the wallet's nonce parameter AFTER the tx object is created
-    // TODO
+    this.nonce++;
     // return a Javascript object with the unsigned transaction and transaction signature
     return tx;
   }
