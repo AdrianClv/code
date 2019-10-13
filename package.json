@@ -4,7 +4,7 @@
   "description": "Code for the course!",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "serve": "http-server public",
     "chapter1": "node c1_CentralPaymentOperator/paypalWithSigs.js",
     "build-c2": "browserify c2_NetworkDoubleSpends/paypalWithSigs.js -o public/bundle.js"
