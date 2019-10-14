@@ -1,6 +1,6 @@
 const EthCrypto = require('eth-crypto');
-const Client = require('./Client.js');
-const Paypal = require('./Paypal.js');
+const Client = require('./client.js');
+const Paypal = require('./paypal.js');
 
 // Paypal Network Demo
 console.log('//////////////////////////////////////////');
@@ -14,7 +14,7 @@ console.log(paypal);
 
 // Mint tokens for our users
 console.log(
-  '\nToday Paypal has a promotion that new users get 100 free tokens for signing up',
+  '\nToday Paypal has a promotion that new users get 1000 free tokens for signing up',
 );
 
 // Alice signs up for Paypal
@@ -82,17 +82,22 @@ console.log(
 // Death by 1000 transaction fees
 function financialAttrition(...users) {
   // simulate 1000 transactions
-  // TODO
-  // pick a random value between 1 and 10
-  // TODO
-  // choose two users at random, but excluding Paypal
-  // TODO
-  // create a transaction from one random user to another
-  // TODO
-  // process the transaction
-  // TODO
-  // print Paypal's balance and/or the full state to the console every 100 iterations so we can see the progress
-  // TODO
+  for(let i = 0; i < 1000; i++) {
+    // pick a random value between 1 and 10
+    let random = Math.floor(Math.random()*arguments.length);
+    // choose two users at random, but excluding Paypal
+    let account1 = arguments[random];
+    let account2 = arguments[random*random % arguments.length];
+    // create a transaction from one random user to another
+    let tx = account1.generateTx(account2.wallet.address, random, 'send');
+    // process the transaction
+    paypal.processTx(tx);
+    // print Paypal's balance and/or the full state to the console every 100 iterations so we can see the progress
+    if(100 % i === 0) {
+      let txCheck = paypal.generateTx(paypal.wallet.address, 0, 'check');
+      paypal.processTx(txCheck);
+    }
+  }
 }
 
 financialAttrition(
